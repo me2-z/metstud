@@ -18,7 +18,7 @@ A simple, file-based web application for managing student admissions, administra
 
 ### Installation & Run
 
- I added .bat files in project so easy to go.
+   *I added .bat files in project so easy to go.*
 1. Clone or download this repository.
 2. Open your terminal in the project root folder.
 3. Start the server:
@@ -47,4 +47,5 @@ Form submits data to /admission endpoint.
 Backend route (routes/admission.js) validates and saves data to data/admissions.json.
 
 Server redirects user to thankyou.html.
+
 
