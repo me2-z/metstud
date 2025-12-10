@@ -7,7 +7,7 @@ A simple, file-based web application for managing student admissions, administra
 ---
 
 ## 📁 Project Structure
-![image alt]()
+![image alt](https://github.com/me2-z/metstud/blob/c005e167df240f1d1524820b9f7cf562f4921695/projectstructure.png)
 
 ## 🚀 Getting Started
 
@@ -47,3 +47,4 @@ Form submits data to /admission endpoint.
 Backend route (routes/admission.js) validates and saves data to data/admissions.json.
 
 Server redirects user to thankyou.html.
+
