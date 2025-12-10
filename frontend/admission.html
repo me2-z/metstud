@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admission – MetStud</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: #f8fafc; color: #1e293b; }
+    header { background: white; padding: 1rem 10%; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .logo { height: 36px; }
+    main { padding: 3rem 10%; }
+    .card { background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 2.5rem; max-width: 800px; margin: 0 auto; }
+    h1 { font-size: 2rem; margin-bottom: 1.5rem; }
+    .field { margin-bottom: 1.2rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+    input, select, textarea { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; }
+    button { background: #2563eb; color: white; border: none; padding: 0.9rem 2rem; border-radius: 8px; font-weight: 600; font-size: 1.05rem; cursor: pointer; width: 100%; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="assets/logo.png" alt="MetStud Logo" class="logo" />
+  </header>
+
+  <main>
+    <div class="card">
+      <h1>Admission Application</h1>
+      <form id="admissionForm">
+        <div class="field">
+          <label>Full Name *</label>
+          <input name="fullName" required />
+        </div>
+        <div class="field">
+          <label>Email *</label>
+          <input type="email" name="email" required />
+        </div>
+        <div class="field">
+          <label>Phone *</label>
+          <input type="tel" name="phone" required />
+        </div>
+        <div class="field">
+          <label>Preferred Program *</label>
+          <select name="program" required>
+            <option value="">Select Program</option>
+            <option>AI & Machine Learning</option>
+            <option>Software Engineering</option>
+            <option>Cyber Security</option>
+            <option>Data Science</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Why do you want to join? *</label>
+          <textarea name="motivation" rows="4" required></textarea>
+        </div>
+        <button type="submit">Submit Application</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('admissionForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+
+      try {
+        const res = await fetch('/api/admission', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+          window.location.href = 'thankyou.html';
+        } else {
+          const error = await res.json();
+          alert('Submission failed: ' + (error.error || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>

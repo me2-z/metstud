@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1712345678901,
+    "fullName": "Alex Johnson",
+    "email": "alex@example.com",
+    "phone": "1234567890",
+    "dob": "2000-05-15",
+    "address": "123 Main St",
+    "program": "AI & Machine Learning",
+    "education": "Bachelor's Degree",
+    "motivation": "I love AI!",
+    "timestamp": "2024-06-01T10:00:00.000Z",
+    "status": "approved"
+  },
+  {
+    "id": 1760451343091,
+    "fullName": "lmao",
+    "email": "r.u.tht.om.as.j@gmail.com",
+    "phone": "1234567890",
+    "program": "Software Engineering",
+    "motivation": "sdsdd",
+    "timestamp": "2025-10-14T14:15:43.091Z",
+    "status": "rejected"
+  },
+  {
+    "id": 1760690000387,
+    "fullName": "meet zanzmera",
+    "email": "zanzmerameet@gmail.com",
+    "phone": "(555) 123-4567",
+    "program": "Data Science",
+    "motivation": ".",
+    "timestamp": "2025-10-17T08:33:20.387Z",
+    "status": "pending"
+  }
+]

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login – MetStud</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      padding: 2.5rem;
+      text-align: center;
+    }
+    .logo {
+      height: 40px;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+    .subtitle {
+      color: #64748b;
+      margin-bottom: 2rem;
+      font-size: 1.05rem;
+    }
+    .form-group {
+      text-align: left;
+      margin-bottom: 1.2rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #334155;
+    }
+    input {
+      width: 100%;
+      padding: 0.85rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    .btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.95rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1.05rem;
+      width: 100%;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #1d4ed8;
+    }
+    .alert {
+      padding: 0.8rem;
+      border-radius: 10px;
+      margin-bottom: 1.2rem;
+      display: none;
+    }
+    .alert-error {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+    .alert-success {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <img src="assets/logo.png" alt="MetStud Logo" class="logo">
+      <h1>Admin Login</h1>
+      <p class="subtitle">Access the dashboard to manage applications</p>
+
+      <div id="alert" class="alert"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            placeholder="Enter username" 
+            required 
+            autocomplete="username"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            placeholder="Enter password" 
+            required 
+            autocomplete="current-password"
+          />
+        </div>
+        <button type="submit" class="btn">Sign In</button>
+      </form>
+    </div>
+    <footer>
+      © 2025 MetStud Admin Panel
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!username || !password) {
+        document.getElementById('alert').textContent = 'Please fill in all fields';
+        document.getElementById('alert').className = 'alert alert-error';
+        document.getElementById('alert').style.display = 'block';
+        return;
+      }
+
+      const alertDiv = document.getElementById('alert');
+      const submitBtn = document.querySelector('.btn');
+      submitBtn.textContent = 'Signing in...';
+      submitBtn.disabled = true;
+      alertDiv.style.display = 'none';
+
+      try {
+        const response = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          alertDiv.className = 'alert alert-success';
+          alertDiv.textContent = 'Login successful! Redirecting to dashboard...';
+          alertDiv.style.display = 'block';
+          
+          // ✅ REDIRECT TO DASHBOARD AFTER LOGIN
+          setTimeout(() => {
+            window.location.href = 'admin-dashboard.html';
+          }, 1000);
+        } else {
+          alertDiv.className = 'alert alert-error';
+          alertDiv.textContent = result.error || 'Invalid username or password.';
+          alertDiv.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alertDiv.className = 'alert alert-error';
+        alertDiv.textContent = 'Network error. Is the server running?';
+        alertDiv.style.display = 'block';
+      } finally {
+        submitBtn.textContent = 'Sign In';
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
